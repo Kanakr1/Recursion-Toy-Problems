@@ -30,11 +30,10 @@ var sort = function(arr) {
 };
 
 var sortArray = function(array) {
-  var result = [];
 
   var sorted = function(a) {
     if(sort(a)) { //BASE
-      result.push(a);
+      return a;
    
     } else { //RECURSIVE CASE
       for(var k=0; k<a.length; k++) {
@@ -45,13 +44,12 @@ var sortArray = function(array) {
           a[k+1]=first;
         }
       }
-      sorted(a);
+      return sorted(a);
     }
   
   };
 
-  sorted(array);
-  return result;
+  return sorted(array);
 
 };
 
@@ -69,12 +67,11 @@ var sort = function(arr) {
   return order;
 };
 
-var sortArray = function(array, result) {
-  result = result || [];
+var sortArray = function(array) {
   
   if(sort(array)) { //BASE
     
-    result.push(array);
+    return array;
   
   } else { //RECURSIVE CASE
   
@@ -87,9 +84,8 @@ var sortArray = function(array, result) {
       }
     
     }
-    sortArray(array, result);
+    return sortArray(array);
   }
-  return result;
 
 };
 
