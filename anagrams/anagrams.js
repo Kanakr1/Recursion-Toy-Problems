@@ -10,7 +10,6 @@ anagrams('abc'); // ['abc', 'acb', 'bac', 'bca', 'cba', 'cab']*/
 3) prefix:"ab" suffix:"c", prefix:"ac" suffix:"b", prefix:"ba" suffix:"c", prefix:"bc" suffix:"a", prefix:"ca" suffix:"b" prefix:"cb" suffix:"a"
 */
 
-
 var anagrams = function(str) {
   var result = [];
 
@@ -45,10 +44,44 @@ var anagrams = function(str) {
   return result;
 };
 
-anagrams('ab');
+//find the solution without an inner function
+
+var anagrams = function(str,prefix, resultsSoFar) {
+  var suffix = str;
+  prefix = prefix||"";
+  var result = resultsSoFar || [];
+  var subOptions = [];
 
 
 
+  if(suffix.length === 0) {
+    
+    result.push(prefix); // and this line :(
+  
+  } else {
+
+    for(var i=0; i<suffix.length; i++) {
+
+      var newPrefix = prefix+suffix[i];
+      var newSuffix = suffix.split('');
+      newSuffix.splice(i,1);
+     
+      subOptions.push([newSuffix.join(''), newPrefix]);
+    }
+
+    for(var k=0; k<subOptions.length; k++) {
+      anagrams(subOptions[k][0], subOptions[k][1], result); //something to do with this line??
+    }
+  }
+
+
+  return result;
+};
+
+anagrams('abc');
+
+
+module.exports = anagrams; //module is global thing that tells anyone requiring this which chunk of the file to export(can be multiple exports-given as an object)
 
 
 
