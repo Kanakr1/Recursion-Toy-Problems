@@ -1,0 +1,26 @@
+{
+  "name": "recursion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deepEquals.js",
+  "dependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muddybarefeet/Recursion-Toy-Problems.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muddybarefeet/Recursion-Toy-Problems/issues"
+  },
+  "homepage": "https://github.com/muddybarefeet/Recursion-Toy-Problems#readme"
+}
