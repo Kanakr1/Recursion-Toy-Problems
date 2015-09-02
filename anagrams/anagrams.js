@@ -46,17 +46,15 @@ var anagrams = function(str) {
 
 //find the solution without an inner function
 
-var anagrams = function(str,prefix, resultsSoFar) {
+var anagrams = function(str,prefix, result) {
   var suffix = str;
   prefix = prefix||"";
-  var result = resultsSoFar || [];
+  result = result || [];
   var subOptions = [];
-
-
 
   if(suffix.length === 0) {
     
-    result.push(prefix); // and this line :(
+    result.push(prefix); 
   
   } else {
 
@@ -70,7 +68,7 @@ var anagrams = function(str,prefix, resultsSoFar) {
     }
 
     for(var k=0; k<subOptions.length; k++) {
-      anagrams(subOptions[k][0], subOptions[k][1], result); //something to do with this line??
+      anagrams(subOptions[k][0], subOptions[k][1], result);
     }
   }
 
