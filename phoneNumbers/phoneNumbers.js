@@ -30,14 +30,17 @@ var keyboard = {
 var telephoneWords = function(numString){
   var result = [];
   /*remove unwanted 1*/
-  var numArr = numString.split('');
-  for(var l=0; l<numString.length; l++) {
-    if(numString[l]==="1") {
-      numArr.splice(l,1);
+  var numCheck = false;
+  //checking if any numbers are not one want to not replace(line 40) if the string is just ones
+  for (var m = 0; m < numString.length; m++) {
+    if(numString[m] !== '1') {
+      numCheck=true;
     }
   }
-  numArr.join('');
-
+  if(numCheck===true) {
+    numString = numString.replace(/[1]/g, '');
+  }
+  
   var words = function(suffix, prefix) {
   
     prefix = prefix || [];
@@ -63,23 +66,23 @@ var telephoneWords = function(numString){
 
   };
     
-  words(numArr);
+  words(numString);
   return result;
 };
 
 
 //without an inner function
-
+/*
 var phoneNumbers = function(numString, prefix, results) {
   var input;
   results = results || [];
   prefix = prefix || [];
-  /*remove unwanted 1*/
+
   numString = numString.replace(/[1]/g, ''); //so much easier!! Thank you regex!!
 
-  if(numString.length === 0) { //BASE
+  if(numString.length === 0) {
       results.push(prefix);
-    } else { //RECURSION
+    } else { 
       
       var prefixOptions = [];
       var letters = keyboard[numString[0]];
@@ -98,11 +101,11 @@ var phoneNumbers = function(numString, prefix, results) {
 
     return results;
 };
+*/
 
-phoneNumbers("23");
 
 
-module.exports = {0:keyboard, 1:phoneNumbers}; //module is global thing that tells anyone requiring this which chunk of the file to export(can be multiple exports-given as an object)
+module.exports = telephoneWords; //module is global thing that tells anyone requiring this which chunk of the file to export(can be multiple exports-given as an object)
 
 
 
