@@ -76,7 +76,7 @@ var anagrams = function(str,prefix, result) {
   return result;
 };
 
-anagrams('abc');
+
 
 
 module.exports = anagrams; //module is global thing that tells anyone requiring this which chunk of the file to export(can be multiple exports-given as an object)
