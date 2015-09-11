@@ -10,35 +10,39 @@ var List = function() {
 };
 
     //now that you're outside the constructor, you can't use THIS anymore. Use List.
-  List.prototype.makeNode = function() {
-    return {data: null, next: null};
-  };
+    var MakeNode = function() {
+      return {data: null, next: null};
+    };
 
-  List.prototype.addToTail = function(data) { 
-  if (this.start === null) {
-   this.start = this.makeNode();
-   this.end = this.start;
-  } else {
-   this.end.next = this.makeNode(); //the end of the list.next key set to new node
-   this.end = this.end.next; //set end to be the end of this new node added
-  }
-  this.end.data = data; //set the data property on the new node to be the number rather than null
+    MakeNode.prototype = Object.create(List.prototype);
+    MakeNode.prototype.constructor = MakeNode;
+
+
+
+  List.prototype.addToTail = function(data) {
+    if (this.start === null) {
+     this.start = new MakeNode();
+     this.end = this.start;
+    } else {
+     this.end.next = new MakeNode(); //the end of the list.next key set to new node
+     this.end = this.end.next; //set end to be the end of this new node added
+    }
+    this.end.data = data; //set the data property on the new node to be the number rather than null
  };
 
 
   List.prototype.removeTail = function() {
     //var last = this.end.data; //the data of the last thing- this is what we want to 'disconnect'
     var current = this.start; //the start object
-    var nextData = current.next; // the data on the next node
+    var nextData = current.next.next; // the data on the next node
     
-    if(nextData === null) { //we know this is the one before the end so we want to make it the last
+    if(nextData === null) { 
       //BASE
-      console.log(this.end);
       current.next = null; //make the next property null
       this.end = current; //make the end node this
     } else { //look at the next node
       //RECURSION
-      console(current.next);
+      console.log("recursing");
       current.next.removeTail();//look at the first node and then at the next node and do the remove tail function on that node
     }
 
@@ -58,7 +62,9 @@ var List = function() {
       return false;
   };
 
-var roo = new List()
-roo.addToTail(10)
-roo.removeTail()
+var roo = new List();
+roo.addToTail(10);
+roo.addToTail(20);
+roo.addToTail(30);
+roo.removeTail();
 
