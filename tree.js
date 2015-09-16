@@ -31,7 +31,6 @@ var Tree = function(number) {
   };
 
   result.search = function(searchNum) {
-    console.log(result.value);
     if(result.value===searchNum) { //if search number is the value on return true
       return true;
     } else if(result.value<searchNum && result.rightSide !==null) { //if the search num is greater then move to the right if not null(empty)
@@ -42,9 +41,38 @@ var Tree = function(number) {
     return false; //if not found return false
   };
   
+  result.between = function(start,end,googleDoc) {
+
+    googleDoc = googleDoc || [];
+
+      if(result.value>start && result.value<end) { //if the current value is between the start and end push it
+        googleDoc.push(result.value);
+      }
+
+      //if the range is greater than the current value then recurse right and that the right is defined
+      if(start>result.value && result.rightSide !== null){
+          result.rightSide.between(start,end,googleDoc);
+      //if the range is less than value then recurse left and that the left is defined
+      } else if(end<result.value && result.leftSide !== null){
+          result.leftSide.between(start,end,googleDoc);
+      //if the values span the number then we need to check both sides
+      } else {
+        //check that each side is defined(ask if true)
+        if(result.rightSide) {
+          result.rightSide.between(start,end,googleDoc);
+        }
+        if(result.leftSide) {
+          result.leftSide.between(start,end,googleDoc);
+        }
+      }
+
+      return googleDoc; //if right/left is true put this in code and make another if for the middle 
+  };
+
   return result;
 
 };
+
   
-//insert
+
 
