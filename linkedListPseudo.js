@@ -9,55 +9,45 @@ var List = function() {
 
 };
 
-    //now that you're outside the constructor, you can't use THIS anymore. Use List.
-    var MakeNode = function() {
-      return {data: null, next: null};
-    };
+  //now that you're outside the constructor, you can't use THIS anymore. Use List.
+  var MakeNode = function(data) {
+    this.data = data;
+    this.next = null;
+  };
 
-    MakeNode.prototype = Object.create(List.prototype);
-    MakeNode.prototype.constructor = MakeNode;
-
-
+  MakeNode.prototype = Object.create(List.prototype);
+  MakeNode.prototype.constructor = MakeNode;
 
   List.prototype.addToTail = function(data) {
     if (this.start === null) {
-     this.start = new MakeNode();
+     this.start = new MakeNode(data);
      this.end = this.start;
     } else {
-     this.end.next = new MakeNode(); //the end of the list.next key set to new node
+     this.end.next = new MakeNode(data); //the end of the list.next key set to new node
      this.end = this.end.next; //set end to be the end of this new node added
     }
-    this.end.data = data; //set the data property on the new node to be the number rather than null
- };
+
+  };
 
 
   List.prototype.removeTail = function() {
-    //var last = this.end.data; //the data of the last thing- this is what we want to 'disconnect'
-    var current = this.start; //the start object
-    var nextData = current.next.next; // the data on the next node
-    
-    if(nextData === null) { 
-      //BASE
-      current.next = null; //make the next property null
-      this.end = current; //make the end node this
-    } else { //look at the next node
-      //RECURSION
-      console.log("recursing");
-      current.next.removeTail();//look at the first node and then at the next node and do the remove tail function on that node
+    var current = this.start;
+    var nextData = current.next;
+    while(nextData.next !== null) {
+      current = nextData; //set the current to the next thing in the list 
+      nextData = nextData.next; //set the next data to the next thing in the list
     }
-
-    return this;
- };
+    current.next = null; //once looped to the end set one before the ends next to be null
+    this.end = current; //set end value to be the current/second last thing
+  };
 
   List.prototype.contains = function(searchVal) {
-    var current = this.start; //start
+    var current = this.start;
       while (current !== null) {  //as long as the start is not null loop
         if(current.data === searchVal) {
           return true;
-        } else {
-          console.log('looping through each one');
         }
-        current = current.next; //current 
+        current = current.next;
       }
       return false;
   };
@@ -66,5 +56,5 @@ var roo = new List();
 roo.addToTail(10);
 roo.addToTail(20);
 roo.addToTail(30);
+roo.addToTail(40);
 roo.removeTail();
-
