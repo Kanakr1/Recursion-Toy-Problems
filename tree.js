@@ -12,19 +12,14 @@ var Tree = function(number) {
 
     if(num>result.value) {
       if(result.rightSide === null) {
-        console.log("right insert");
         result.rightSide = Tree(num); //here!
       } else {
-        console.log("recurse right");
-        result.leftSide.insert(num);
+        result.rightSide.insert(num);
       }
     } else {
       if(result.leftSide === null) {
-        console.log("left insert");
         result.leftSide = Tree(num);
       } else {
-         console.log("recurse left");
-         console.log(result.leftSide);
          result.leftSide.insert(num);
       }
     }
@@ -69,10 +64,74 @@ var Tree = function(number) {
       return googleDoc; //if right/left is true put this in code and make another if for the middle 
   };
 
+  result.bredthFirst = function(tree) {
+    //if the tree is empty then return 'empty tree'
+    if(tree.leftSide === null && tree.rightSide === null) {
+      console.log('empty');
+    }
+    var queue = []; //where elements gets queued as move through the tree
+    var visited = []; //where been before
+    
+    queue.push(tree); //add to queue
+
+    while(queue.length>0) {
+
+      var seen = queue.shift();
+      visited.push(seen.value); //put the first value in queue to seen and remove from the queue
+
+      if(seen.leftSide !== null) { //if has a left get val
+        queue.push(seen.leftSide);
+      }
+      if(seen.rightSide !== null) { //if has a righ get val
+        queue.push(seen.rightSide);
+      }
+
+    }
+    return visited; //array of all nodes in bredth first order :)
+
+  };
+
+    result.preorDepthFirst = function(tree) {
+    var visited = [];
+
+    var inner = function(tree) {
+      console.log(tree.value);
+          
+      visited.push(tree.value);
+    
+      while(tree.leftSide !== null/* || tree.rightSide !== null*/) { //takes me down the left side how get back up?
+        if(visited.indexOf(tree === -1)) {
+        console.log('treeLeft:',tree.leftSide);
+            return inner(tree.leftSide);
+            return inner(tree.rightSide);
+          }
+      }
+    
+    };
+
+    inner(tree);
+    return visited;
+  };
+
+
   return result;
 
 };
 
   
+var ve = Tree(10)
 
+ve.insert(5)
+
+ve.insert(2)
+
+ve.insert(7)
+
+ve.insert(15)
+
+ve.insert(12)
+
+ve.insert(20)
+
+ve.preorDepthFirst(ve);
 
