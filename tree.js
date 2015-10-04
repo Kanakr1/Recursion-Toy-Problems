@@ -20,7 +20,7 @@ var Tree = function(number) {
       if(result.leftSide === null) {
         result.leftSide = Tree(num);
       } else {
-         result.leftSide.insert(num);
+        result.leftSide.insert(num);
       }
     }
   };
@@ -78,7 +78,7 @@ var Tree = function(number) {
 
       var seen = queue.shift();
       visited.push(seen.value); //put the first value in queue to seen and remove from the queue
-
+      
       if(seen.leftSide !== null) { //if has a left get val
         queue.push(seen.leftSide);
       }
@@ -86,31 +86,60 @@ var Tree = function(number) {
         queue.push(seen.rightSide);
       }
 
+
     }
     return visited; //array of all nodes in bredth first order :)
 
   };
 
-    result.preorDepthFirst = function(tree) {
-    var visited = [];
+  result.bredthFirstRecursion = function(tree) {
+    var queue = []; //where elements gets queued as move through the tree
+    var visited = []; //where been before
+    
+    queue.push(tree); //add to queue
 
-    var inner = function(tree) {
-      console.log(tree.value);
-          
-      visited.push(tree.value);
-    
-      while(tree.leftSide !== null/* || tree.rightSide !== null*/) { //takes me down the left side how get back up?
-        if(visited.indexOf(tree === -1)) {
-        console.log('treeLeft:',tree.leftSide);
-            return inner(tree.leftSide);
-            return inner(tree.rightSide);
-          }
+    var inner = function(seen){
+      
+      if(seen){
+
+        if(seen.leftSide !== null) { //if has a left get val
+          queue.push(seen.leftSide);
+        }
+        if(seen.rightSide !== null) { //if has a righ get val
+          queue.push(seen.rightSide);
+        }
+
       }
-    
+
+      var next = queue.shift();
+      if(next){
+        visited.push(next.value); //put the first value in queue to seen and remove from the queue
+        inner(next);
+      }
+
     };
 
-    inner(tree);
-    return visited;
+    inner();
+
+    return visited; //array of all nodes in bredth first order :)
+
+  };
+
+  result.preorDepthFirst = function(tree,result){
+
+    result = result || [];
+    result.push(tree.value);
+
+    if(tree.leftSide){
+      tree.preorDepthFirst(tree.leftSide,result);
+    }
+
+    if(tree.rightSide){
+      tree.preorDepthFirst(tree.rightSide,result);
+    }
+    
+    return result;
+
   };
 
 
@@ -119,19 +148,13 @@ var Tree = function(number) {
 };
 
   
-var ve = Tree(10)
+var ve = Tree(10);
+ve.insert(5);
+ve.insert(2);
+ve.insert(7);
+ve.insert(15);
+ve.insert(12);
+ve.insert(20);
 
-ve.insert(5)
-
-ve.insert(2)
-
-ve.insert(7)
-
-ve.insert(15)
-
-ve.insert(12)
-
-ve.insert(20)
-
-ve.preorDepthFirst(ve);
+var x = ve.bredthFirstRecursion(ve); //[jhjhj, hkjk, kjk]
 
